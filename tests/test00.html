@@ -13,8 +13,8 @@
 		if(this.iteration > 49) {
 			this.stop();
 		}
-		var text = "t ONE: " + this.iteration
-		window.document.writeln(text);
+		var text = "<p>t ONE: " + this.iteration + "</p>";
+		window.document.write(text);
 		console.log(text);
 	});
 
@@ -29,6 +29,8 @@
 		} else if(this.iteration > 49) {
 			this.stop();
 		}
+		var text = "<p>t DOIS: " + this.iteration + "</p>";
+		window.document.write(text);
 		console.log("t DOIS: " + this.iteration);
 	});
 
