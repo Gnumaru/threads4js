@@ -10,7 +10,7 @@ threads4js can be included in a page using conventional script tags
 ```html
 <script src="threads4js.js"></script>
 ```
-or be required as a commonjs style module, 
+or be required as a commonjs style module, to be precompiled by [browserify](http://browserify.org/) or used online without precompilation with [executejs](https://github.com/Gnumaru/executejs)
 ```javascript
 var Thread = require("./threads4js.js").Thread;
 ```
