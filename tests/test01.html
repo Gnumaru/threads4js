@@ -20,8 +20,8 @@
 		var span = window.document.getElementById("span");
 		var input = window.document.getElementById("input");
 		var t1 = new Thread(function() {
-			span.innerText = input.value;
-			span.textContent = input.value;
+			span.innerText = input.value;//for chrome
+			span.textContent = input.value;//for firefox
 		}, 100);
 		t1.start();
 	})();
