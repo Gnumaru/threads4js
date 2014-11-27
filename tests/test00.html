@@ -5,7 +5,7 @@
 	type="text/javascript"
 	src="../threads4js.js"></script>
 </head>
-<body>
+<body style="font-size: 10px">
 </body>
 <script type="text/javascript">
 	//Thread one just logs its counter
@@ -13,8 +13,8 @@
 		if(this.iteration > 49) {
 			this.stop();
 		}
-		var text = "<p>t ONE: " + this.iteration + "</p>";
-		window.document.write(text);
+		var text = "t ONE: " + this.iteration;
+		window.document.body.innerHTML += text + "<br />";
 		console.log(text);
 	});
 
@@ -29,9 +29,9 @@
 		} else if(this.iteration > 49) {
 			this.stop();
 		}
-		var text = "<p>t DOIS: " + this.iteration + "</p>";
-		window.document.write(text);
-		console.log("t DOIS: " + this.iteration);
+		var text = "t TWO: " + this.iteration;
+		window.document.body.innerHTML += text + "<br />";
+		console.log(text);
 	});
 
 	t1.start();
