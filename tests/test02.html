@@ -7,12 +7,16 @@
 </head>
 <body >
 	<div style="position: absolute; width: 800px; height: 600px; background: #EEEEEE; left: 0px; top: 0px "
-	onmousemove="window.lastEvent = window.event || window.lastEvent;"></div>
+	onmousemove="window.lastEvent = window.event || event || window.lastEvent;"></div>
 </body>
 <script type="text/javascript">
 	(function() {
 		var span = window.document.getElementById("span");
 		var input = window.document.getElementById("input");
+		var onmousemove = function(event){
+			window.lastEvent = window.event || event || window.lastEvent;
+		};
+		
 		var t1 = new Thread(function() {
 			if(window.lastEvent) {
 				if(window.beforeLastEvent != window.lastEvent){
@@ -28,6 +32,7 @@
 					div.style.left = mouseX + "px";
 					div.style.top = mouseY + "px";
 					div.style.opacity = "0.1";
+					div.onmousemove = onmousemove;
 					window.document.getElementsByTagName("body")[0].appendChild(div);
 				}
 			}
