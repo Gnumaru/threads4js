@@ -13,7 +13,9 @@
 		if(this.iteration > 49) {
 			this.stop();
 		}
-		console.log("t UM: " + this.iteration);
+		var text = "t ONE: " + this.iteration
+		window.document.writeln(text);
+		console.log(text);
 	});
 
 	// Thread two logs its counter, but on one moment puts thread one to sleep and on another wakes it up.
