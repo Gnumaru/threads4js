@@ -82,3 +82,13 @@
 		window.Thread = Thread;
 	}
 })(typeof (module) !== "undefined" ? module : undefined);
+
+// AMD style module export
+if(typeof (define) !== "undefined") {
+	define(function() {
+		var Thread = window.Thread || module.exports.Thread;
+		return {
+			"Thread" : Thread
+		};
+	});
+}
