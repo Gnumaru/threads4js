@@ -21,6 +21,7 @@
 		var input = window.document.getElementById("input");
 		var t1 = new Thread(function() {
 			span.innerText = input.value;
+			span.textContent = input.value;
 		}, 100);
 		t1.start();
 	})();
