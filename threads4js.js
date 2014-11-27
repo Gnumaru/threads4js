@@ -38,6 +38,7 @@
 			this.isSleeping = true;
 			this.timeAsleep = millis;
 		}
+		return this;
 	};
 
 	Thread.prototype.wakeUp = function() {
@@ -46,6 +47,7 @@
 			this.isSleeping = false;
 			this.timeAsleep = 0;
 		}
+		return this;
 	};
 
 	Thread.prototype.start = function() {
@@ -55,6 +57,7 @@
 			this.isSleeping = false;
 			this.run(this);
 		}
+		return this;
 	};
 
 	Thread.prototype.stop = function() {
@@ -66,6 +69,7 @@
 			this.isAlive = false;
 			console.log("Thread " + this.name + " forcefully stoped.");
 		}
+		return this;
 	};
 	/** Class definition END */
 
