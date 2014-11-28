@@ -5,19 +5,55 @@
 	 * execution behavior and its frequency, if provided
 	 */
 	var Thread = function(method, executionFrequency) {
+		/**
+		 * The method executed by the thread each iteration. By defaul, does
+		 * nothing.
+		 */
 		this.method = method || function() {
 		};
+		/**
+		 * The frequency, in milliseconds, the thread execute its method. By
+		 * default it is 100ms, wich seems to be a very cost efective value for
+		 * non processing intensive tasks
+		 */
 		this.executionFrequency = executionFrequency || 100;
 
 		/**
-		 * The thread's name, currently unused.
+		 * The thread's name. Preferrably could be a unique one, but not
+		 * necessarily
 		 */
 		this.id = (+("" + Math.random()).substr(2)).toString(16);
+		/**
+		 * The count of iterations already executed by this thread
+		 */
 		this.iteration = 0;
+		/**
+		 * The amount of time this thread has been put to sleep, in milliseconds
+		 */
 		this.timeAsleep = 0;
+		/**
+		 * The timestamp of the last time this thread executed an iteration
+		 */
 		this.lastExecution = 0;
+		/**
+		 * Tells wether this thread is asleep or awake
+		 */
 		this.isSleeping = false;
+		/**
+		 * Tells wether this thread is alive of not
+		 */
 		this.isAlive = false;
+		/**
+		 * The result of this thread execution. Not all threads need to generate
+		 * and outcome value of processing, but if it does, at the end of its
+		 * last iteration, it should put its processing result in this attribute
+		 * and then call stop() onto itself.
+		 */
+		this.result = null;
+		/**
+		 * Variable to hold a reference to the global object, which may change
+		 * in case the code is running inside a browser or inside nodejs
+		 */
 		this.global = typeof (global) != 'undefined' ? global : window; //asks who is the global object, in case we are running inside node.js
 	};
 
@@ -100,10 +136,23 @@
 			this.lastExecution = 0;
 			this.isSleeping = false;
 			this.isAlive = false;
+			this.result = null;
 			console.log("Thread " + this.id + " forcefully stoped.");
 		}
 		return this;
 	};
+
+	/**
+	 * Restarts the current thread. Usefull when some kind of exception resulted
+	 * in a dirty thread halt.
+	 * 
+	 * @returns {Thread}
+	 */
+	Thread.prototype.restart = function() {
+		this.stop();
+		this.start();
+		return this;
+	}
 	/* Class definition END */
 
 	// Freeze the Class' function object, to prevent class modification
