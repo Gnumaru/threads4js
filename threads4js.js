@@ -14,7 +14,9 @@
 		/**
 		 * The frequency, in milliseconds, the thread execute its method. By
 		 * default it is 100ms, wich seems to be a very cost efective value for
-		 * non processing intensive tasks
+		 * non processing intensive tasks. Any value below 5 should make no
+		 * difference at all. Values of exactly 0 cause poor performance for
+		 * some reason not yet known.
 		 */
 		this.executionFrequency = executionFrequency || 100;
 
