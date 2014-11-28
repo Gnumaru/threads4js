@@ -1,67 +1,86 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="utf-8" />
 <script
 	type="text/javascript"
 	src="../threads4js.js"></script>
 </head>
 <body>
-	</p>Type any number 'n' to watch its sum "from 1 to n" by thread1. Type 123456789 to force an exception wich forces thread1 halt</p>
+	</p>
+	Type any number 'n' to watch its sum "from 1 to n" by thread1. Type 123456789 to force an exception wich forces thread1 halt
+	</p>
 	<input
 		id="input"
 		type="text"></input>
-	
-	<input value="restart thread1" type="button" onclick="window.summingThread.restart();" />
+	<input
+		value="restart thread1"
+		type="button"
+		onclick="window.summingThread.restart();" />
 	<br />
-	<p>This number is being summed by thread1 and exibited by thread2: <span id="span"></span></p>
-	<p>This number is being summed by thread2: <span id="span2">0</span></p>
+	<p>
+		This number is being summed by thread1 and exibited by thread2: <span id="span"></span>
+	</p>
+	<p>
+		This number is being summed by thread2: <span id="span2">0</span>
+	</p>
 </body>
 <script type="text/javascript">
 	(function() {
 		var span = window.document.getElementById("span");
 		var span2 = window.document.getElementById("span2");
 		var input = window.document.getElementById("input");
-		
+
 		var summingThread = new Thread(function() {
 			var n = parseInt(input.value, 10);
-			if(this.result === null){
+			if(this.partialResult === null) {
 				this.oldN = n;
-				if(n !== NaN// tem algum bug na comparação com NaN, ele acha que NaN !== NaN, por isso foi necessária a comparação abaixo.
-					&& n >= 0// Qualquer comparação de um número válido com NaN dá false, então a comparação n > -1 serve tanto para ver se n é NaN quanto pra ver se ele está na faixa válida de valores esperados
-					){
+				//'n' can not be lower than 0 and can not be NaN. But since comparing any valid number with NaN results false, then just comparing n >= 0 is enough
+				if(n >= 0) {
 					this.number = n;
-					this.result = 0;
+					this.partialResult = 0;
 				}
-			}else if(this.number > 0){
-				if(n !== 123456789){
-					if(this.oldN === n){
-						this.result += this.number;
+			} else if(this.number > 0) {
+				if(n !== 123456789) {
+					if(this.oldN === n) {
+						this.partialResult += this.number;
 						this.number--;
-					}else{
+						if(this.number <= 0) {
+							this.result = this.partialResult;
+						}
+					} else {
 						this.oldN = n;
 						this.number = n;
-						this.result = 0;
+						this.partialResult = 0;
+						this.result = null;
 					}
-				}else{
+				} else {
 					// forces an exception to kill thread
-					throw("\"Certain Doom Exception\"");
-					unexistentFunction_97868413419684198418();
+					throw ("\"Certain Doom Exception\"");
 				}
-			}else{
-				if(this.oldN !== n && n > -1){
+			} else {
+				if(this.oldN !== n && n >= 0) {
 					this.oldN = n;
 					this.number = n;
-					this.result = 0;
+					this.partialResult = 0;
+					this.result = null;
 				}
 			}
-		}, 100);
+		}, 5);
 		window.summingThread = summingThread;
 		summingThread.start();
-		
+
 		var exibitionThread = new Thread(function() {
-			span.innerText = summingThread.result;//for chrome
-			span.textContent = summingThread.result;//for firefox
-			var a = span2.innerText || span.textContent;
+			var txt = "Summing...";
+			if(summingThread.result) {
+				txt = summingThread.result;
+			} else {
+				txt += " (" + summingThread.partialResult + ")";
+			}
+			span.innerText = txt;//for chrome
+			span.textContent = txt;//for firefox
+
+			var a = span2.innerText || span2.textContent;
 			a++;
 			span2.innerText = a;
 			span2.textContent = a;
